@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransitPulse — GPU-Accelerated Bus Reliability Decision Engine</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-area">
+            <div class="pulse-indicator"></div>
+            <h1>TransitPulse</h1>
+            <span class="badge">NVIDIA RAPIDS GPU Engine</span>
+        </div>
+        <!-- Stat Strip -->
+        <div class="header-stat-strip">
+            <span class="stat-pill" id="stat-pings">Loading pings...</span>
+            <span class="stat-dot">•</span>
+            <span class="stat-pill" id="stat-routes">Loading routes...</span>
+            <span class="stat-dot">•</span>
+            <span class="stat-pill" id="stat-days">Loading days...</span>
+            <span class="stat-dot">•</span>
+            <span class="stat-pill highlight" id="stat-time">Time-to-insight: Loading...</span>
+        </div>
+        <div class="status-panel">
+            <span id="gpu-banner" class="gpu-banner cpu-fallback">Engine: CPU</span>
+            <span class="divider">|</span>
+            <span id="current-time">06 Jul 2026</span>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Panel 1: Route Leaderboard -->
+        <section class="card panel-leaderboard">
+            <div class="card-header">
+                <h2>Route Reliability Leaderboard</h2>
+                <span class="subtitle">Latest 30-day aggregates (Sortable)</span>
+            </div>
+            <div class="table-container">
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th id="th-route">Route</th>
+                            <th id="th-score">Reliability Score</th>
+                            <th id="th-headway">Avg Headway</th>
+                            <th id="th-dwell">Avg Dwell</th>
+                            <th id="th-trend">WoW Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Panel 2: Timeline Chart & Route Details -->
+        <section class="card panel-chart">
+            <div class="card-header">
+                <div class="header-details">
+                    <h2>Route Reliability Timeline</h2>
+                    <select id="route-selector" class="dropdown">
+                        <option value="">Select a route...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="timeline-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Panel 3: Weekly Decisions & Interventions -->
+        <section class="card panel-decisions">
+            <div class="card-header">
+                <h2>This Week's Decisions</h2>
+                <span class="subtitle">Top 8 schedule interventions by severity</span>
+            </div>
+            <div class="decisions-list" id="decisions-container">
+                <!-- Dynamic decisions list -->
+            </div>
+        </section>
+
+        <!-- Panel 4: GPU Acceleration Benchmarks -->
+        <section class="card panel-benchmarks">
+            <div class="card-header">
+                <h2>GPU Performance Acceleration</h2>
+                <span class="subtitle">NVIDIA RAPIDS (cudf.pandas) vs Standard CPU</span>
+            </div>
+            <div class="benchmark-content">
+                <div class="headline-stat">
+                    <span class="stat-label">150M Pings Benchmark</span>
+                    <span class="stat-value" id="speedup-val">-</span>
+                    <p class="stat-desc" id="insight-headline">Loading benchmark results...</p>
+                    <p class="stat-desc" id="benchmark-source" style="font-size: 0.65rem; opacity: 0.6; margin-top: 0.3rem;"></p>
+                </div>
+                <div class="chart-embed">
+                    <div id="chart-image-container">
+                        <img id="benchmark-speedup-img" src="/speedup_chart.png" class="speedup-img" alt="Speedup Chart" />
+                    </div>
+                </div>
+                <p class="repro-caption">Benchmark reproducible via <span class="code-font">benchmark_colab.ipynb</span></p>
+                <p class="repro-caption" style="font-size: 0.6rem; opacity: 0.5; margin-top: 0.2rem;">Pipeline benchmarked at 150M synthetic pings (~70× demo scale) to demonstrate production headroom; identical code path.</p>
+            </div>
+        </section>
+
+        <!-- Panel 5: Gemini Copilot / NL Operations Analyst -->
+        <section class="card panel-chat">
+            <div class="card-header">
+                <h2>Gemini Decision Copilot</h2>
+                <span class="subtitle">Ask operations questions grounded in live metrics</span>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message system-message">
+                        Hello! I'm your Transit Operations Analyst. I can query our reliability database in real-time to analyze trends, suggest schedule changes, and examine headway anomalies. How can I help you today?
+                    </div>
+                </div>
+                
+                <!-- Suggestion Chips -->
+                <div class="suggestion-chips">
+                    <button class="chip" data-question="Which 5 routes should we fix first?">Which 5 routes should we fix first?</button>
+                    <button class="chip" data-question="Why did DTC-010 degrade this week?">Why did DTC-010 degrade this week?</button>
+                    <button class="chip" data-question="Compare weekday vs weekend reliability">Compare weekday vs weekend reliability</button>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Ask operations question..." />
+                    <button id="chat-send" class="btn btn-primary">Ask Analyst</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

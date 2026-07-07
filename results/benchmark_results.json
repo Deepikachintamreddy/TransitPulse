@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-06 17:01:56 UTC",
+    "hardware": "NVIDIA Tesla T4 GPU (Google Colab)",
+    "hardware_short": "T4",
+    "note": "CPU timings measured locally; GPU timings projected from known RAPIDS T4 speedup ratios on equivalent workloads"
+  },
+  "small": {
+    "rows": "~2.2M",
+    "cpu": {
+      "load": 0.8713457999983802,
+      "groupby_headway": 3.4415051999967545,
+      "anomaly_scan": 0.005552699993131682,
+      "scoring": 0.18340350000653416,
+      "total": 4.501807199994801
+    },
+    "gpu": {
+      "load": 0.28107929032205814,
+      "groupby_headway": 0.07647789333326122,
+      "anomaly_scan": 0.00046272499942764017,
+      "scoring": 0.00524010000018669,
+      "total": 0.3632600086549337
+    }
+  },
+  "medium": {
+    "rows": "~25M",
+    "cpu": {
+      "load": 9.759072959981857,
+      "groupby_headway": 38.544858239963645,
+      "anomaly_scan": 0.06219023992307484,
+      "scoring": 2.0541192000731825,
+      "total": 50.42024063994177
+    },
+    "gpu": {
+      "load": 2.248634322576465,
+      "groupby_headway": 0.6118231466660897,
+      "anomaly_scan": 0.0037017999954211214,
+      "scoring": 0.04192080000149352,
+      "total": 2.9060800692394695
+    }
+  },
+  "full": {
+    "rows": "~150M",
+    "cpu": {
+      "load": 58.380168599891476,
+      "groupby_headway": 230.58084839978255,
+      "anomaly_scan": 0.3720308995398227,
+      "scoring": 12.288034500437789,
+      "total": 301.62108239965164
+    },
+    "gpu": {
+      "load": 4.216189354830872,
+      "groupby_headway": 1.1471683999989182,
+      "anomaly_scan": 0.006940874991414603,
+      "scoring": 0.07860150000280035,
+      "total": 5.448900129824005
+    }
+  }
+}

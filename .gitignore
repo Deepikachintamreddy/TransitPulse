@@ -1,0 +1,24 @@
+# Ignore large generated data folders
+data/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore local environment files and logs
+.env
+*.log
+.system_generated/
+.tempmediaStorage/
+browser/
+
+# Ignore IDE configs
+.vscode/
+.idea/
+.agents/
+
+# Ignore binary image files in results
+results/*.png
+results/*.webp
